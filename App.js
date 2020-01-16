@@ -2,11 +2,21 @@ import React from 'react';
 import Loading from "./Loading";
 import { Alert } from "react-native";
 import * as Location from "expo-location";
+import axios from 'axios';
+
+//Weather API key
+const API_KEY = "afff68bddf85b21a1b24ff8a7623b434";
 
 export default class App extends React.Component {
   state = {
     isLoading: true
   }
+
+  getWeather = async (latitude, longitude) => {
+    const { data } = await axios.get(
+      `http://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&APPID=${API_KEY}`);
+    console.log('결과',data);
+    }
 
   getLocation = async () => {
     try {
@@ -19,6 +29,8 @@ export default class App extends React.Component {
       const location = await Location.getCurrentPositionAsync();
       // 지역 관련 객체 정보 추출하기
       const { coords: { latitude, longitude } } = await Location.getCurrentPositionAsync();
+      // 날씨 정보 가져오는 함수 호출
+      this.getWeather(latitude, longitude);
       // 정보를 가져올 때는 동작하지 않는 것으로 지정.
       this.setState({ isLoading: false })
 
