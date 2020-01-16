@@ -1,7 +1,8 @@
 import React from "react";
 import propTypes from "prop-types";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, StatusBar } from "react-native";
 import { MaterialIcons, MaterialCommunityIcons } from "@expo/vector-icons";
+import { LinearGradient } from "expo-linear-gradient";
 
 const weatherOptions = {
     Thunderstorm: {
@@ -54,72 +55,66 @@ const weatherOptions = {
         iconName: "weather-hail",
         gradient: ["#4DA0B0", "#D39D38"],
         title: "Dusty",
-        subtitle: "Don't go out!"
+        subtitle: "Thanks a lot China 🖕🏻"
     },
     Haze: {
         iconName: "weather-hail",
         gradient: ["#4DA0B0", "#D39D38"],
         title: "Haze",
         subtitle: "Just don't go outside."
-    },
-    Smoke: {
-        iconName: "smoke-free",
-        gradient: ["#4DA0B0", "#D39D38"],
-        title: "Smoke",
-        subtitle: "Use mask"
     }
 };
 
-export default function Weather({ temp, condition, temp_max, temp_min, name }) {
+export default function Weather({ temp, temp_max, temp_min, name, condition }) {
     return (
-        <View style={styles.container}>
-            <View style={styles.location}>
-                <MaterialIcons
-                    size={30}
-                    name="my-location"
-                    color="black"
-                />
-                <Text style={styles.subtemp}> {name} </Text>
+        <LinearGradient
+            colors={weatherOptions[condition].gradient}
+            style={styles.container}>
+            <StatusBar barStyle="light-content" />
+            <View style={styles.container}>
+                <View style={styles.location}>
+                    <MaterialIcons
+                        size={30}
+                        name="my-location"
+                        color="white"
+                    />
+                    <Text style={styles.subtemp}> {name} </Text>
+                </View>
+                <View style={styles.weather}>
+                    <MaterialCommunityIcons
+                        size={96}
+                        name={weatherOptions[condition].iconName}
+                        color="white"
+                    />
+                    <Text style={styles.temp}>{temp}°</Text>
+                    <Text style={styles.subtemp}>Min({temp_min}) ~ Max({temp_max})°</Text>
+                </View>
+                <View style={styles.info}>
+                    <Text style={styles.title}>{weatherOptions[condition].title}</Text>
+                    <Text style={styles.subtitle}>
+                        {weatherOptions[condition].subtitle}
+                    </Text>
+                </View>
             </View>
-            <View style={styles.weather}>
-                <MaterialCommunityIcons
-                    size={96}
-                    name={weatherOptions[condition].iconName}
-                    color="black"
-                />
-                <Text style={styles.temp}>{temp}°</Text>
-                <Text style={styles.subtemp}>Min({temp_min}) ~ Max({temp_max})°</Text>
-            </View>
-            <View style={styles.info}>
-                <Text style={styles.title}>{weatherOptions[condition].title}</Text>
-                <Text style={styles.subtitle}>
-                    {weatherOptions[condition].subtitle}
-                </Text>
-            </View>
-        </View>);
+        </LinearGradient>
+    );
 }
 
-
-Weather.propTypes = {
-    temp: propTypes.number.isRequired,
-    condition: propTypes.oneOf([
-        "Thunderstorm",
-        "Drizzle",
-        "Rain",
-        "Snow",
-        "Atmosphere",
-        "Clear",
-        "Clouds",
-        "Haze",
-        "Mist",
-        "Dust",
-        "Smoke",
-        "Fog",
-        "Sand",
-        "Ash",
-        "Squall",
-    ]).isRequired
-}
+// Weather.propTypes = {
+//     temp: PropTypes.number.isRequired,
+//     condition: PropTypes.oneOf([
+//         "Thunderstorm",
+//         "Drizzle",
+//         "Rain",
+//         "Snow",
+//         "Atmosphere",
+//         "Clear",
+//         "Clouds",
+//         "Haze",
+//         "Mist",
+//         "Dust"
+//     ]).isRequired
+// };
 
 const styles = StyleSheet.create({
     container: {
@@ -144,13 +139,15 @@ const styles = StyleSheet.create({
 
     },
     temp: {
-        fontSize: 32
+        fontSize: 32,
+        color: "white"
     },
     subtemp: {
-        fontSize: 20
+        fontSize: 20,
+        color: "white"
     },
     title: {
-        color: "black",
+        color: "white",
         fontSize: 44,
         fontWeight: "300",
         marginBottom: 10,
@@ -158,7 +155,7 @@ const styles = StyleSheet.create({
     },
     subtitle: {
         fontWeight: "600",
-        color: "black",
+        color: "white",
         fontSize: 24,
         textAlign: "left"
     },
