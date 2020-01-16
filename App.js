@@ -66,7 +66,6 @@ export default class App extends React.Component {
     return isLoading ? (
       <Loading />
     ) : (
-        // <Weather temp={Math.round(temp)} condition={condition} />
         <Weather temp={Math.round(temp)} temp_max={Math.round(temp_max)} temp_min={Math.round(temp_min)} name={name} condition={condition} />
       );
 
