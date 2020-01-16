@@ -87,7 +87,7 @@ export default function Weather({ temp, temp_max, temp_min, name, condition }) {
                         color="white"
                     />
                     <Text style={styles.temp}>{temp}°</Text>
-                    <Text style={styles.subtemp}>Min({temp_min}) ~ Max({temp_max})°</Text>
+                    <Text style={styles.subtemp}>{temp_min} (Min) ~ {temp_max} (Max)°</Text>
                 </View>
                 <View style={styles.info}>
                     <Text style={styles.title}>{weatherOptions[condition].title}</Text>
@@ -99,22 +99,6 @@ export default function Weather({ temp, temp_max, temp_min, name, condition }) {
         </LinearGradient>
     );
 }
-
-// Weather.propTypes = {
-//     temp: PropTypes.number.isRequired,
-//     condition: PropTypes.oneOf([
-//         "Thunderstorm",
-//         "Drizzle",
-//         "Rain",
-//         "Snow",
-//         "Atmosphere",
-//         "Clear",
-//         "Clouds",
-//         "Haze",
-//         "Mist",
-//         "Dust"
-//     ]).isRequired
-// };
 
 const styles = StyleSheet.create({
     container: {
@@ -166,3 +150,4 @@ const styles = StyleSheet.create({
         flex: 1
     }
 })
+
